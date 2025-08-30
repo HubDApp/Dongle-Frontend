@@ -1,4 +1,4 @@
-# Dongle v0 - Your Gateway to Starknet dApps
+# Dongle v0 - Your Onchain App-store
 
 A hackathon-ready MVP for discovering, reviewing, and submitting Starknet dApps. Built with Next.js 14, TypeScript, and a polished Web3 dark theme.
 
