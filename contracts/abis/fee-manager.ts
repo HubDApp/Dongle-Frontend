@@ -1,0 +1,1 @@
+export const FEE_MANAGER_ABI = [{"type":"function","name":"pay_verification_fee","inputs":[{"name":"project_id","type":"core::integer::u32"},{"name":"payer","type":"core::starknet::contract_address::ContractAddress"}],"outputs":[],"state_mutability":"external"}] as const;

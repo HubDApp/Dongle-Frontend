@@ -31,6 +31,11 @@ export function categoryToU8(category: Category): number {
     Gaming: 2,
     DAO: 3,
     Infra: 4,
+    Identity: 5,
+    Bridge: 6,
+    Wallet: 7,
+    Infrastructure: 8,
+    Productivity: 9,
   }
   return mapping[category]
 }

@@ -1,0 +1,1 @@
+export const RATINGS_ABI = [{"type":"function","name":"add_review","inputs":[{"name":"dapp_id","type":"core::integer::u32"},{"name":"stars","type":"core::integer::u8"},{"name":"comment_cid","type":"core::starknet::contract_address::ContractAddress"}],"outputs":[],"state_mutability":"external"}] as const;

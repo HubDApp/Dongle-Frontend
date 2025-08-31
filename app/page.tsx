@@ -14,7 +14,7 @@ export default function HomePage() {
 
   const { data: dapps = [], isLoading } = useDappList(undefined, search)
 
-  const featuredDapps = dapps.filter((dapp) => dapp.featured).slice(0, 6)
+  const featuredDapps = dapps.filter((dapp: any) => dapp.featured).slice(0, 6)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-card/30 to-background">

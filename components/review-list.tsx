@@ -41,7 +41,7 @@ export function ReviewList({ dappId }: ReviewListProps) {
 
   return (
     <div className="space-y-4">
-      {reviews.map((review) => (
+      {reviews.map((review: any) => (
         <Card key={review.id}>
           <CardContent className="p-4">
             <div className="flex items-start justify-between mb-2">
