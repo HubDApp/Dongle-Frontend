@@ -18,7 +18,6 @@ A hackathon-ready MVP for discovering, reviewing, and submitting Starknet dApps.
 - **UI Components**: shadcn/ui, Radix UI, Lucide React
 - **State Management**: TanStack Query
 - **Blockchain**: starknet.js, get-starknet
-- **Storage**: IPFS (Web3.Storage/Pinata)
 - **Styling**: Tailwind CSS with custom dark theme
 - **Animation**: Framer Motion
 
@@ -35,7 +34,7 @@ A hackathon-ready MVP for discovering, reviewing, and submitting Starknet dApps.
 1. Clone the repository:
 \`\`\`bash
 git clone <repository-url>
-cd dongle-v0
+cd dongle-frontend
 \`\`\`
 
 2. Install dependencies:
