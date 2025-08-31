@@ -127,11 +127,12 @@ export default function DappPage({ params }: DappPageProps) {
                   <div className="flex flex-col sm:flex-row gap-6">
                     <div className="relative">
                       <CidImage
-                        cid={dapp.metadata?.logo}
+                        cid={(dapp.metadata as any)?.logo ?? ""}
                         alt={dapp.metadata?.name || "dApp logo"}
                         width={120}
                         height={120}
                         className="h-30 w-30 rounded-3xl shadow-2xl"
+
                       />
                       <div className="absolute inset-0 rounded-3xl bg-gradient-to-br from-primary/20 to-secondary/20" />
                     </div>

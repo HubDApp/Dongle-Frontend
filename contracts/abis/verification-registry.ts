@@ -1,0 +1,1 @@
+export const VERIFICATION_REGISTRY_ABI = [{"type":"function","name":"request_verification","inputs":[{"name":"project_id","type":"core::integer::u32"},{"name":"evidence_cid","type":"core::starknet::contract_address::ContractAddress"}],"outputs":[],"state_mutability":"external"}] as const;

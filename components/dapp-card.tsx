@@ -28,9 +28,10 @@ export function DappCard({ dapp }: DappCardProps) {
               <CidImage
                 cid={dapp.metadata?.logo}
                 alt={dapp.metadata?.name || "dApp logo"}
-                width={56}
-                height={56}
-                className="h-14 w-14 rounded-xl shadow-lg group-hover:shadow-xl transition-all duration-300"
+                width={80}
+                height={80}
+                className="h-20 w-20 rounded-2xl object-cover"
+      
               />
               <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
             </div>

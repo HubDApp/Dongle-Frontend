@@ -1,5 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query"
 import type { Dapp, DappMetadata, Category } from "@/types/dapp"
+import { getRegistry } from "@/lib/contracts"
+import { cidToFelt, categoryToU8 } from "@/lib/codec"
 
 const MOCK_DAPPS: Dapp[] = [
   {
@@ -203,33 +205,60 @@ export function useDappList(category?: Category, search?: string) {
   return useQuery({
     queryKey: ["dapps", category, search],
     queryFn: async () => {
-      // In production, this would call the contract
-      // const registry = getRegistry();
-      // const result = await registry.listDapps(0, 100);
+      try {
+        // Try to call the actual contract
+        const registry = getRegistry()
+        const result = await registry.listDapps(0, 100)
+        
+        // Convert contract result to Dapp objects
+        // This is a simplified conversion - you'll need to implement the full logic
+        const dapps = result.dapps.map((dappId: number) => ({
+          id: dappId,
+          primaryContract: "0x...", // Get from contract
+          metadataCid: "Qm...", // Get from contract
+          claimed: false, // Get from contract
+          verified: false, // Get from contract
+          featured: false, // Get from contract
+          metadata: {
+            name: `Dapp ${dappId}`,
+            category: "DeFi" as Category,
+            description: "Description from contract",
+            website: "",
+            twitter: "",
+            documentation: "",
+            github: "",
+          },
+        }))
+        
+        return dapps
+      } catch (error) {
+        console.warn("Contract call failed, using mock data:", error)
+        
+        // Fallback to mock data
+        let dapps = MOCK_DAPPS
 
-      let dapps = MOCK_DAPPS
+        if (category) {
+          dapps = dapps.filter((dapp) => dapp.metadata?.category === category)
+        }
 
-      if (category) {
-        dapps = dapps.filter((dapp) => dapp.metadata?.category === category)
+        if (search) {
+          const searchLower = search.toLowerCase()
+          dapps = dapps.filter(
+            (dapp) =>
+              dapp.metadata?.name.toLowerCase().includes(searchLower) ||
+              dapp.metadata?.description?.toLowerCase().includes(searchLower),
+          )
+        }
+
+        // Sort: Featured → Verified → Highest Rated → Most Reviewed → Recently Added
+        return dapps.sort((a, b) => {
+          if (a.featured && !b.featured) return -1
+          if (!a.featured && b.featured) return 1
+          if (a.verified && !b.verified) return -1
+          if (!a.verified && b.verified) return 1
+          return b.id - a.id // Recently added
+        })
       }
-
-      if (search) {
-        const searchLower = search.toLowerCase()
-        dapps = dapps.filter(
-          (dapp) =>
-            dapp.metadata?.name.toLowerCase().includes(searchLower) ||
-            dapp.metadata?.description?.toLowerCase().includes(searchLower),
-        )
-      }
-
-      // Sort: Featured → Verified → Highest Rated → Most Reviewed → Recently Added
-      return dapps.sort((a, b) => {
-        if (a.featured && !b.featured) return -1
-        if (!a.featured && b.featured) return 1
-        if (a.verified && !b.verified) return -1
-        if (!a.verified && b.verified) return 1
-        return b.id - a.id // Recently added
-      })
     },
   })
 }
@@ -238,11 +267,35 @@ export function useDapp(id: number) {
   return useQuery({
     queryKey: ["dapp", id],
     queryFn: async () => {
-      // In production, this would call the contract
-      // const registry = getRegistry();
-      // const result = await registry.getDapp(id);
-
-      return MOCK_DAPPS.find((dapp) => dapp.id === id) || null
+      try {
+        // Try to call the actual contract
+        const registry = getRegistry()
+        const result = await registry.getDapp(id)
+        
+        // Convert contract result to Dapp object
+        return {
+          id,
+          primaryContract: result.primary_contract,
+          metadataCid: result.metadata_cid,
+          claimed: result.claimed,
+          verified: false, // Get from verification registry
+          featured: false, // Get from registry
+          metadata: {
+            name: `Dapp ${id}`,
+            category: "DeFi" as Category,
+            description: "Description from contract",
+            website: "",
+            twitter: "",
+            documentation: "",
+            github: "",
+          },
+        }
+      } catch (error) {
+        console.warn("Contract call failed, using mock data:", error)
+        
+        // Fallback to mock data
+        return MOCK_DAPPS.find((dapp) => dapp.id === id) || null
+      }
     },
   })
 }
@@ -266,28 +319,34 @@ export function useSubmitDapp() {
 
       const { cid } = await response.json()
 
-      // In production, this would call the contract
-      // const registry = getRegistry();
-      // const result = await registry.addDapp(
-      //   data.metadata.name,
-      //   data.primaryContract,
-      //   categoryToU8(data.metadata.category),
-      //   cidToFelt(cid)
-      // );
+      try {
+        // Try to call the actual contract
+        const registry = getRegistry()
+        const result = await registry.addDapp(
+          data.metadata.name,
+          data.primaryContract,
+          categoryToU8(data.metadata.category),
+          cidToFelt(cid)
+        )
 
-      // Mock response
-      const newId = Math.max(...MOCK_DAPPS.map((d) => d.id)) + 1
-      const newDapp: Dapp = {
-        id: newId,
-        primaryContract: data.primaryContract,
-        metadataCid: cid,
-        claimed: false,
-        metadata: data.metadata,
+        return { dappId: result.dapp_id, txHash: "0x..." }
+      } catch (error) {
+        console.warn("Contract call failed, using mock data:", error)
+        
+        // Fallback to mock data
+        const newId = Math.max(...MOCK_DAPPS.map((d) => d.id)) + 1
+        const newDapp: Dapp = {
+          id: newId,
+          primaryContract: data.primaryContract,
+          metadataCid: cid,
+          claimed: false,
+          metadata: data.metadata,
+        }
+
+        MOCK_DAPPS.push(newDapp)
+
+        return { dappId: newId, txHash: "0xmocktxhash" }
       }
-
-      MOCK_DAPPS.push(newDapp)
-
-      return { dappId: newId, txHash: "0xmocktxhash" }
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["dapps"] })

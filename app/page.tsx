@@ -14,7 +14,7 @@ export default function HomePage() {
 
   const { data: dapps = [], isLoading } = useDappList(undefined, search)
 
-  const featuredDapps = dapps.filter((dapp) => dapp.featured).slice(0, 6)
+  const featuredDapps = dapps.filter((dapp: any) => dapp.featured).slice(0, 6)
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-card/30 to-background">
@@ -236,7 +236,7 @@ export default function HomePage() {
           </div>
 
           <div className="border-t border-border/40 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm text-muted-foreground">© 2024 Dongle. All rights reserved.</p>
+            <p className="text-sm text-muted-foreground">© 2025 Dongle. All rights reserved.</p>
             <p className="text-sm text-muted-foreground mt-2 md:mt-0">Built with ❤️ for the decentralized future</p>
           </div>
         </div>
