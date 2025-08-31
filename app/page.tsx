@@ -236,7 +236,7 @@ export default function HomePage() {
           </div>
 
           <div className="border-t border-border/40 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
-            <p className="text-sm text-muted-foreground">© 2024 Dongle. All rights reserved.</p>
+            <p className="text-sm text-muted-foreground">© 2025 Dongle. All rights reserved.</p>
             <p className="text-sm text-muted-foreground mt-2 md:mt-0">Built with ❤️ for the decentralized future</p>
           </div>
         </div>
