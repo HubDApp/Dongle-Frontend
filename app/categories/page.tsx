@@ -8,7 +8,8 @@ import { Navbar } from "@/components/navbar"
 import { useDappList } from "@/hooks/use-dapps"
 import type { Category } from "@/types/dapp"
 import { Button } from "@/components/ui/button"
-import { ArrowUpDown, Star, TrendingUp, Clock, Verified } from "lucide-react"
+import Link from "next/link"
+import { ArrowUpDown, Star, TrendingUp, Clock, Verified, Github, Twitter, Mail } from "lucide-react"
 
 type SortOption = "name" | "rating" | "newest" | "featured" | "verified"
 
@@ -136,6 +137,105 @@ export default function CategoriesPage() {
           <DappGrid dapps={sortedDapps} isLoading={isLoading} />
         </div>
       </main>
+      <footer className="border-t border-border/40 bg-card/50 backdrop-blur-xl mt-24">
+        <div className="container mx-auto px-6 py-12">
+          <div className="grid md:grid-cols-4 gap-8">
+            <div className="space-y-4">
+               <Link href="/" className="flex items-center space-x-2">
+              <div className="h-10 w-10 rounded-lg overflow-hidden">
+                <img src="/dongle-logo.png" alt="Dongle" className="h-full w-full object-cover" />
+              </div>
+              <span className="text-xl font-bold gradient-text font-serif">Dongle</span>
+            </Link>
+              <p className="text-sm text-muted-foreground text-pretty">
+                Your gateway to the decentralized future. Discover and connect with the best dApps.
+              </p>
+              <div className="flex space-x-4">
+                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                  <Twitter className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                  <Github className="h-4 w-4" />
+                </Button>
+                <Button variant="ghost" size="sm" className="h-8 w-8 p-0">
+                  <Mail className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="font-semibold">Explore</h4>
+              <div className="space-y-2 text-sm">
+                <Link
+                  href="/categories"
+                  className="block text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Categories
+                </Link>
+                <Link href="/reviews" className="block text-muted-foreground hover:text-foreground transition-colors">
+                  Reviews
+                </Link>
+                <Link href="/submit" className="block text-muted-foreground hover:text-foreground transition-colors">
+                  Submit dApp
+                </Link>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="font-semibold">Categories</h4>
+              <div className="space-y-2 text-sm">
+                <Link
+                  href="/categories?category=DeFi"
+                  className="block text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  DeFi
+                </Link>
+                <Link
+                  href="/categories?category=NFT"
+                  className="block text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  NFT
+                </Link>
+                <Link
+                  href="/categories?category=Gaming"
+                  className="block text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  Gaming
+                </Link>
+                <Link
+                  href="/categories?category=DAO"
+                  className="block text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  DAO
+                </Link>
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <h4 className="font-semibold">Support</h4>
+              <div className="space-y-2 text-sm">
+                <Link href="/help" className="block text-muted-foreground hover:text-foreground transition-colors">
+                  Help Center
+                </Link>
+                <Link href="/contact" className="block text-muted-foreground hover:text-foreground transition-colors">
+                  Contact Us
+                </Link>
+                <Link href="/privacy" className="block text-muted-foreground hover:text-foreground transition-colors">
+                  Privacy Policy
+                </Link>
+                <Link href="/terms" className="block text-muted-foreground hover:text-foreground transition-colors">
+                  Terms of Service
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          <div className="border-t border-border/40 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+            <p className="text-sm text-muted-foreground">© 2025 Dongle. All rights reserved.</p>
+            <p className="text-sm text-muted-foreground mt-2 md:mt-0">Built with ❤️ for the decentralized future</p>
+          </div>
+        </div>
+      </footer>
     </div>
   )
 }

@@ -212,12 +212,12 @@ const ReviewPage = () => {
         <div className="container mx-auto px-6 py-12">
           <div className="grid md:grid-cols-4 gap-8">
             <div className="space-y-4">
-              <div className="flex items-center space-x-2">
-                <div className="h-8 w-8 rounded-lg gradient-bg flex items-center justify-center">
-                  <span className="text-white font-bold text-lg">D</span>
-                </div>
-                <span className="text-xl font-bold gradient-text font-serif">Dongle</span>
+               <Link href="/" className="flex items-center space-x-2">
+              <div className="h-10 w-10 rounded-lg overflow-hidden">
+                <img src="/dongle-logo.png" alt="Dongle" className="h-full w-full object-cover" />
               </div>
+              <span className="text-xl font-bold gradient-text font-serif">Dongle</span>
+            </Link>
               <p className="text-sm text-muted-foreground text-pretty">
                 Your gateway to the decentralized future. Discover and connect with the best dApps.
               </p>
